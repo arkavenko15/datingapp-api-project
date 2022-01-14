@@ -1,10 +1,11 @@
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
   <div class="container">
       <a class="navbar-brand" routerLink='/' routerLinkActive='active'>Dating App</a>
 
       <ul class="navbar-nav me-auto">
+        <ng-container *ngIf="accountService.currentUser$ | async">
           <li class="nav-item">
-              <a class="nav-link" routerLink='/members' routerLinkActive='active' >Matches</a>
+            <a class="nav-link" routerLink='/members' routerLinkActive='active' >Matches</a>
           </li>
           <li class="nav-item">
               <a class="nav-link" routerLink='/lists' routerLinkActive='active'>Lists</a>
@@ -12,11 +13,12 @@
           <li class="nav-item">
               <a class="nav-link" routerLink='/messages'routerLinkActive='active' >Messages</a>
           </li>
+        </ng-container>
       </ul>
 
-      <div class="dropdown" dropdown *ngIf="accountService.currentUser$ | async">
+      <div class="dropdown" dropdown *ngIf="(accountService.currentUser$ | async ) as user">
           <img src="./assets/user.png" >
-          <a class="dropdown-toggle text-light ms-2 text-decoration-none" dropdownToggle>Welcome</a>
+          <a class="dropdown-toggle text-light ms-2 text-decoration-none" dropdownToggle>Welcome {{user.username | titlecase}}</a>
           <div class="dropdown-menu mt-3" *dropdownMenu>
               <a routerLink='/member/edit' class="dropdown-item">Edit Profile</a>
               <div class="dropdown-divider"></div>
